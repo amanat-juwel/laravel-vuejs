@@ -1,0 +1,12 @@
+/*
+* Logout 
+*/
+//just copy logout from default layout
+
+/*
+* Color icon or text
+*/
+# _variables.scss
+.green{
+  color: $green;
+}

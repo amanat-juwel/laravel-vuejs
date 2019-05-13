@@ -1,0 +1,13 @@
+methods:{
+            
+            loadUsers(){
+                
+                this.$Progress.start();
+                axios.get("api/user").then(({ data }) => (this.users = data));
+                this.$Progress.finish();
+                
+            },
+created() {
+            this.loadUsers()
+	   setInterval(() => this.loadUsers(), 3000) // every 3 sec
+        }

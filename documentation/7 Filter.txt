@@ -1,0 +1,22 @@
+Manipulates user data in front end
+
+step 1:
+npm install moment --save
+
+/**
+ * Moment Js
+ */
+import moment from 'moment';
+
+Vue.filter('upText', function(text){
+  return text.charAt(0).toUpperCase() + text.slice(1)
+});
+
+
+Vue.filter('myDate',function(created){
+  return moment(created).format('MMMM Do YYYY');
+});
+
+frontend
+<td>{{user.type | upText}}</td>
+<td>{{user.created_at | myDate}}</td>

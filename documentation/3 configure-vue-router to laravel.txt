@@ -1,0 +1,86 @@
+//vue router link
+1. https://router.vuejs.org/installation.html#direct-download-cdn
+2. npm install vue-router
+//after installing vue router go to app.js and add this lines
+
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+3. npm run watch
+//vue router documentation
+
+4. https://router.vuejs.org/guide/#html
+ in template master 
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <div class="wrapper" id="app"> 
+   <router-link to="/dashboard" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </router-link>	
+	add this tag to render the view 
+  <!-- component matched by the route will render here -->
+        <router-view></router-view>
+  
+
+
+Example:
+
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+require('./bootstrap');
+
+window.Vue = require('vue');
+// Declaring global event
+window.Event = new Vue();
+
+/**
+ * Vue Router
+ */
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+// Define some routes and route components( without .default() will give an error )
+let routes = [
+    { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/tasks', component: require('./components/Task/TaskManagement.vue').default },
+    { path: '/profile', component: require('./components/Profile.vue').default }
+  ]
+
+//Create the router instance and pass the `routes` option
+const router = new VueRouter({
+    routes // short for `routes: routes`
+  })
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+
+// const files = require.context('./', true, /\.vue$/i)
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
+Vue.component('task-form', require('./components/Task/TaskForm.vue').default);
+Vue.component('task-list', require('./components/Task/TaskList.vue').default);
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+// add router in app instance
+const app = new Vue({
+    router
+  }).$mount('#app')
+

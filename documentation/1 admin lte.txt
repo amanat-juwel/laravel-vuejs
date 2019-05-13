@@ -1,0 +1,21 @@
+* after installing laravel 
+
+* php artisan make:auth
+
+* php artisan migrate
+
+* run command 'npm install'
+  then => 'npm run watch'
+
+* npm install admin-lte@v3.0.0-alpha.2 --save 
+
+# resources > layouts > master.blade.php
+  > copy adminLte-3 startup.html page code and paste
+  > remove all css and add <link rel="stylesheet" href="/css/app.css"> [this refers to public folder] 
+  > remove all script and add <script src="/js/app.js"></script> 
+
+# in app.scss
+@import '~admin-lte/dist/css/adminlte.css';
+ 
+# in bootstrap.js
+require('admin-lte');

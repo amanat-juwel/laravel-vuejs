@@ -1,0 +1,20 @@
+https://github.com/gilbitron/laravel-vue-pagination
+
+step 1:
+npm install laravel-vue-pagination
+
+setp 2:
+Vue.component('pagination', require('laravel-vue-pagination'));
+
+step 3
+<!-- /.card-body -->
+              <div class="card-footer">
+                  <pagination :data="users" @pagination-change-page="getResults"></pagination>
+              </div>
+
+getResults(page = 1) {
+                        axios.get('api/user?page=' + page)
+                            .then(response => {
+                                this.users = response.data;
+                            });
+                },

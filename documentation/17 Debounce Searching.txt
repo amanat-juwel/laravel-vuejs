@@ -1,0 +1,48 @@
+###app.js
+
+const app = new Vue({
+    router,
+    data:{
+        search: ''
+    },
+    methods:{
+        searchit: _.debounce(() => {
+            Event.$emit('searching');
+        },1000)
+    }
+  }).$mount('#app')
+
+###route
+Route::get('findUser', 'API\UserController@search');
+
+###controller
+public function search(){
+        if ($search = \Request::get('q')) {
+            $users = User::where(function($query) use ($search){
+                $query->where('name','LIKE',"%$search%")
+                        ->orWhere('email','LIKE',"%$search%");
+            })->paginate(20);
+        }else{
+            $users = User::latest()->paginate(5);
+        }
+        return $users;
+    }
+
+###User.vue
+created() {
+            Event.$on('searching',() => {
+                let query = this.$parent.search;
+                axios.get('api/findUser?q=' + query)
+                .then((data) => {
+                    this.users = data.data
+                })
+                .catch(() => {
+                })
+            })
+           this.loadUsers();
+           Event.$on('AfterCreate',() => {
+               this.loadUsers();
+           });
+        //    setInterval(() => this.loadUsers(), 3000);
+        }
+

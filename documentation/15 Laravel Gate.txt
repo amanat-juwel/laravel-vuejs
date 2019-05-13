@@ -1,0 +1,134 @@
+#### AuthServiceProvider
+
+<?php
+
+namespace App\Providers;
+
+use Laravel\Passport\Passport;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
+class AuthServiceProvider extends ServiceProvider
+{
+    /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [
+        'App\Model' => 'App\Policies\ModelPolicy',
+    ];
+
+    /**
+     * Register any authentication / authorization services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->registerPolicies();
+
+        Gate::define('isAdmin',function($user){
+            return $user->type === 'admin';
+        });
+        Gate::define('isAuthor',function($user){
+            return $user->type === 'author';
+        });
+        Gate::define('isUser',function($user){
+            return $user->type === 'user';
+        });
+        
+        Passport::routes();
+    }
+}
+
+#### UserController
+
+public function __construct()
+    {
+        $this->middleware('auth:api');
+
+        //apply ACL to all method
+        //$this->authorize('isAdmin');
+    }
+or
+
+public function index()
+    {
+        // $this->authorize('isAdmin');
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+            return User::latest()->paginate(5);
+        }
+    }
+
+
+#### Gate component
+
+export default class Gate{
+
+  constructor(user){
+      this.user = user;
+  }
+
+  isAdmin(){
+      return this.user.type === 'admin';
+  }
+
+  isUser(){
+      return this.user.type === 'user';
+  }
+  isAdminOrAuthor(){
+      if(this.user.type === 'admin' || this.user.type === 'author'){
+          return true;
+      }
+
+  }
+  isAuthorOrUser(){
+      if(this.user.type === 'user' || this.user.type === 'author'){
+          return true;
+      }
+
+  }
+
+
+
+}
+
+#### app.js
+
+/**
+ * Vue Gate for authentication , window user gate is also added on master layout
+ */
+import Gate from "./Gate";
+Vue.prototype.$gate = new Gate(window.user);
+
+Vue.use(VueRouter)
+
+Vue.component(
+  'not-found',
+  require('./components/NotFound.vue').default
+);
+
+#### master layout
+
+@can('isAdmin')
+// ....
+@endcan
+
+@auth
+<script>
+    window.user = @json(auth()->user())
+</script>
+@endauth
+
+#### user component
+
+loadUsers(){
+                if(this.$gate.isAdminOrAuthor()){
+                    this.$Progress.start();
+                    axios.get("api/user").then(({ data }) => (this.users = data));
+                    this.$Progress.finish();
+                }
+               
+            },
+

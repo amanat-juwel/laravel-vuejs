@@ -1,0 +1,24 @@
+/*
+* vue router history mode
+*/
+
+#app.js
+const router = new VueRouter({
+  mode: 'history',
+  routes: [...]
+})
+
+#web.php
+//vue js routing
+Route::get('{path}',"HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' );
+
+
+/*
+* Active menu
+*/
+#app.scss
+
+.router-link-exact-active{
+  background-color: #1c5f8c;
+  color: #fff !important;
+}

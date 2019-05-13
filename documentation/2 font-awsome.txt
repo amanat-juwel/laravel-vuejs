@@ -1,0 +1,21 @@
+* npm install @fortawesome/fontawesome-free
+
+* in app.scss file 
+
+// font-awsome
+$fa-font-path: "../webfonts";
+
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+
+* change image icon
+<img src="./backend/images/profile.png" class="img-circle elevation-2" alt="User Image">
+
+* change dashboard icon
+<i class="nav-icon fas fa-tachometer-alt"></i>
+
+
+//// USE CDN IN LARAVEL 

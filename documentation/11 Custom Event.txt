@@ -1,0 +1,43 @@
+/**
+ * Global Event Handler
+ */
+window.Fire =  new Vue();
+
+//frontend
+
+methods:{
+            newModal(){
+                
+                this.form.reset();
+                $('#addNew').modal('show');
+            },
+            loadUsers(){
+                
+                this.$Progress.start();
+                axios.get("api/user").then(({ data }) => (this.users = data));
+                this.$Progress.finish();
+                
+            },
+            createUser(){
+                this.$Progress.start();
+                this.form.post('api/user')
+                .then(()=>{
+                    Fire.$emit('AfterCreate');
+                    $('#addNew').modal('hide')
+                    Toast.fire({
+                        type: 'success',
+                        title: 'User Created successfully'
+                        })
+                    this.$Progress.finish();
+                })
+                .catch(()=>{
+                })
+            }
+        },
+        created() {
+            this.loadUsers();
+            Fire.$on('AfterCreate',() => {
+                this.loadUsers();
+            });
+            //    setInterval(() => this.loadUsers(), 3000);  // 3 sec interval
+        }

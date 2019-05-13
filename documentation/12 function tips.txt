@@ -1,0 +1,5 @@
+//if you not passing  parameter through a function, write like this->
+@click="newModal"
+
+//if you pass  parameter through a function, write like this->
+@click="deleteUser(user.id)"
