@@ -62936,7 +62936,9 @@ var staticRenderFns = [
       _c("div", { staticClass: "card card-default" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("Dashboard")]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" })
+        _c("div", { staticClass: "card-body" }, [
+          _vm._v("\n            Welcome Admin\n        ")
+        ])
       ])
     ])
   }
@@ -81122,13 +81124,13 @@ window.Event = new Vue();
  */
 
 
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
 /**
  * Vue Gate for authentication , window user gate is also added on master layout
  */
 
 
 Vue.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_5__["default"](window.user);
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
 /**
  * Laravel Passport Components
 */
@@ -81144,6 +81146,9 @@ Vue.component('not-found', __webpack_require__(/*! ./components/NotFound.vue */ 
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js")); // Define some routes and route components( without .default() will give an error )
 
 var routes = [{
+  path: '/home',
+  component: __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue").default
+}, {
   path: '/dashboard',
   component: __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue").default
 }, {

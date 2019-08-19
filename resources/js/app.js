@@ -106,6 +106,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 
 // Define some routes and route components( without .default() will give an error )
 let routes = [
+    { path: '/home', component: require('./components/Dashboard.vue').default },
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/tasks', component: require('./components/Task/TaskManagement.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
